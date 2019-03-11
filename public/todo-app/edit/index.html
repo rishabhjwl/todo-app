@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <title>Todo-App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Edit Todo</h1>
+      <textarea name="todo" id="todo" class="form-control" rows="5"></textarea>
+      <button type="button" name="button" id="edit" class="btn btn-primary" style="margin:30px 0">Update Todo</button>
+    </div>
+  </body>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    var id=(location.search).substring(4)
+    var url="/api/"+id
+    console.log(url);
+
+    $.ajax({
+      url: url,
+      type: "get",
+      success: function(resData) {
+        console.log(resData);
+        if (resData.status) {
+          var todoVal=resData.data.todo
+          $('#todo').val(todoVal)
+        }
+      }
+    });
+
+
+    $("#edit").click(()=>{
+      var todo=$("#todo").val();
+      var todoData={
+        todo:todo,
+      }
+      $.ajax({
+        url: url,
+        type: "put",
+        data: todoData,
+        success: function(resData) {
+          console.log(resData);
+          window.location="/todo-app";
+        }
+      });
+    })
+
+  })
+  </script>
+
+</html>

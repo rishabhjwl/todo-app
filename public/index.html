@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <title>Todo-App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Login Page</h1>
+      <input type="text" id="username" placeholder="username" class="form-control" style="margin:30px 0">
+      <input type="password" id="password" placeholder="password" class="form-control" style="margin:30px 0">
+      <button type="button" name="button" id="submit" class="btn btn-primary">Submit</button>
+    </div>
+    </body>
+      <script type="text/javascript">
+        $("#submit").click(function(){
+          var username=$("#username").val();
+          var password=$("#password").val();
+          var userData={
+            username:username,
+            password:password
+          }
+          $.ajax({
+            url: "/login",
+            type: "post",
+            data: userData,
+            success: function(resData) {
+              if (resData.status===true) {
+                window.location="/todo-app"
+              }
+              else {
+                alert("Authentication failed")
+                console.log(resData.data);
+              }
+            }
+          });
+        })
+      </script>
+</html>
